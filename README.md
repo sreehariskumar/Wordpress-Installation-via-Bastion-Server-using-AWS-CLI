@@ -107,13 +107,7 @@ $ aws ec2 create-subnet --vpc-id vpc-0d71e52a8c79c4305 --cidr-block 172.16.128.0
 $ aws ec2 create-tags --resources subnet-034d5c4ae26958fcb --tags Key=Name,Value=Subnet3
 ```
 
-4. Modify a subet attribute value to enable Auto-assign public IP
-``` s
-$ aws ec2 modify-subnet-attribute --subnet-id subnet-0a2c990cccaf6c8ca --map-public-ip-on-launch
-$ aws ec2 modify-subnet-attribute --subnet-id subnet-0a2c990cccaf6c8ca --map-public-ip-on-launch
-```
-
-5. View the complete information of the VPC and subnets using the below command. 
+4. View the complete information of the VPC and subnets using the below command. 
 ```s
 $ aws ec2 describe-subnets  --filters "Name=vpc-id,Values=vpc-0d71e52a8c79c4305"
 
@@ -177,7 +171,7 @@ $ aws ec2 describe-subnets  --filters "Name=vpc-id,Values=vpc-0d71e52a8c79c4305"
 }
 ```
 
-6. Create an Internet Gateway using the following command, which returns the new Internet Gateway ID.
+5. Create an Internet Gateway using the following command, which returns the new Internet Gateway ID.
 ```s
 $ aws ec2 create-internet-gateway --query InternetGateway.InternetGatewayId --output text
 
@@ -190,7 +184,7 @@ Attach the internet gateway to our VPC to allow the instances(and NAT gateway) t
 $ aws ec2 attach-internet-gateway --vpc-id vpc-0d71e52a8c79c4305 --internet-gateway-id igw-0776eab2191d55fcd
 ```
 
-7. Create a NAT Gateway after allocating an elastic IP using the allocate-address command.
+6. Create a NAT Gateway after allocating an elastic IP using the allocate-address command.
 
 ```s
 $ aws ec2 allocate-address
@@ -204,7 +198,7 @@ $ aws ec2 allocate-address
 }
 ```
 
-8. Create a NAT gateway for the private subnet and assign the elastic IP.
+7. Create a NAT gateway for the private subnet and assign the elastic IP.
 
 ```s
 $ aws ec2 create-nat-gateway --subnet-id subnet-034d5c4ae26958fcb --allocation-id eipalloc-02e2f01ec0811e9c5
@@ -226,7 +220,7 @@ $ aws ec2 create-nat-gateway --subnet-id subnet-034d5c4ae26958fcb --allocation-i
 }
 ```
 
-9. A route table will be created by default.  We can find the default route table information of the VPC using the below command
+8. A route table will be created by default.  We can find the default route table information of the VPC using the below command
 
 ```s
 $ aws ec2 describe-route-tables --filters="Name=vpc-id,Values=vpc-0d71e52a8c79c4305"
@@ -262,7 +256,7 @@ $ aws ec2 describe-route-tables --filters="Name=vpc-id,Values=vpc-0d71e52a8c79c4
 }
 ```
 
-10. Create a custom route table(for private subnet) using the below command.
+9. Create a custom route table(for private subnet) using the below command.
 
 ```s
 $ aws ec2 create-route-table --vpc-id vpc-0d71e52a8c79c4305 --query RouteTable.RouteTableId --output text
@@ -270,7 +264,7 @@ $ aws ec2 create-route-table --vpc-id vpc-0d71e52a8c79c4305 --query RouteTable.R
 rtb-07b8bad039aee580f
 ```
 
-11.  Associate the private subnet with the route table.
+10.  Associate the private subnet with the route table.
 
 ```s
  $ aws ec2 associate-route-table  --subnet-id subnet-034d5c4ae26958fcb --route-table-id rtb-07b8bad039aee580f
@@ -283,7 +277,7 @@ rtb-07b8bad039aee580f
 }
 ```
 
-12. Add a route table entry to redirect all the traffic from VPC to pass through the InternetGateway.
+11. Add a route table entry to redirect all the traffic from VPC to pass through the InternetGateway.
 
 ```s
 $ aws ec2 create-route --route-table-id rtb-01f50968f2b15d30e --destination-cidr-block 0.0.0.0/0 --gateway-id igw-0776eab2191d55fcd
@@ -293,7 +287,7 @@ $ aws ec2 create-route --route-table-id rtb-01f50968f2b15d30e --destination-cidr
 }
 ```
 
-13. Add route table entry in the custom route table to enable instances in the private subnet to communicate with the NAT gateway.
+12. Add route table entry in the custom route table to enable instances in the private subnet to communicate with the NAT gateway.
 
 ```s
 $ aws ec2 create-route --route-table-id rtb-07b8bad039aee580f --destination-cidr-block 0.0.0.0/0 --nat-gateway-id nat-0e858265b8c49214c
@@ -303,7 +297,7 @@ $ aws ec2 create-route --route-table-id rtb-07b8bad039aee580f --destination-cidr
 }
 ```
 
-14. To confirm that the route has been created and is active, we can describe the route table using the following describe-route-tables command.
+13. To confirm that the route has been created and is active, we can describe the route table using the following describe-route-tables command.
 
 ```s
 $ aws ec2 describe-route-tables --filters "Name=vpc-id,Values=vpc-0d71e52a8c79c4305"
@@ -377,7 +371,7 @@ $ aws ec2 describe-route-tables --filters "Name=vpc-id,Values=vpc-0d71e52a8c79c4
 }
 ```
 
-15. Modify the VPC attribute to enable public DNS hostname
+14. Modify the VPC attribute to enable public DNS hostname
 
 ``` s
 $ aws ec2 modify-vpc-attribute --vpc-id vpc-0d71e52a8c79c4305 --enable-dns-support "{\"Value\":true}"
@@ -386,7 +380,7 @@ $ aws ec2 modify-vpc-attribute --vpc-id vpc-0d71e52a8c79c4305 --enable-dns-hostn
 These commands will run without any output if executed correctly.
 
 
-16. Create a security group for bastion server to accept SSH connection
+15. Create a security group for bastion server to accept SSH connection
 
 ```s
 aws ec2 create-security-group --group-name bastion --description "allow 22 from my-ip" --vpc-id vpc-0d71e52a8c79c4305
@@ -396,7 +390,7 @@ aws ec2 create-security-group --group-name bastion --description "allow 22 from 
 }
 ```
 
-17. Create a security group for frontend server to accept SSH connection from bstion server and HTTP connection from anywhere.
+16. Create a security group for frontend server to accept SSH connection from bstion server and HTTP connection from anywhere.
 
 ```s
 $ aws ec2 create-security-group --group-name frontend --description "allow 22 from bastion and 80 from all" --vpc-id vpc-0d71e52a8c79c4305
