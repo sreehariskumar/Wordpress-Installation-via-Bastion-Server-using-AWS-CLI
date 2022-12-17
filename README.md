@@ -32,7 +32,8 @@ Default output format [None]: json
 
 ``` s
 $ aws ec2 create-vpc --cidr-block 172.16.0.0/16 --query Vpc.VpcId --output text
-
+```
+```s
 vpc-0d71e52a8c79c4305
 ```
 
@@ -48,7 +49,8 @@ $ aws ec2 create-tags --resources vpc-0d71e52a8c79c4305 --tags Key=Name,Value=VP
 
 ``` s
 $ aws ec2 create-subnet --vpc-id vpc-0d71e52a8c79c4305 --cidr-block 172.16.0.0/18 --availability-zone us-east-2a
-
+```
+```s
 {
     "Subnet": {
         "AvailabilityZone": "us-east-2a",
@@ -68,7 +70,8 @@ $ aws ec2 create-tags --resources subnet-0fc044a0778f08c84 --tags Key=Name,Value
 ```
 ``` s
 $ aws ec2 create-subnet --vpc-id vpc-0d71e52a8c79c4305 --cidr-block 172.16.64.0/18 --availability-zone us-east-2b
-
+```
+```s
 {
     "Subnet": {
         "AvailabilityZone": "us-east-2b",
@@ -89,7 +92,8 @@ $ aws ec2 create-tags --resources subnet-0e9f16987c188ccff --tags Key=Name,Value
 
 ``` s
 $ aws ec2 create-subnet --vpc-id vpc-0d71e52a8c79c4305 --cidr-block 172.16.128.0/18 --availability-zone us-east-2c
-
+```
+```s
 {
     "Subnet": {
         "AvailabilityZone": "us-east-2c",
@@ -110,7 +114,8 @@ $ aws ec2 create-tags --resources subnet-034d5c4ae26958fcb --tags Key=Name,Value
 4. View the complete information of the VPC and subnets using the below command. 
 ```s
 $ aws ec2 describe-subnets  --filters "Name=vpc-id,Values=vpc-0d71e52a8c79c4305"
-
+```
+```s
 {
     "Subnets": [
         {
@@ -174,7 +179,8 @@ $ aws ec2 describe-subnets  --filters "Name=vpc-id,Values=vpc-0d71e52a8c79c4305"
 5. Create an Internet Gateway using the following command, which returns the new Internet Gateway ID.
 ```s
 $ aws ec2 create-internet-gateway --query InternetGateway.InternetGatewayId --output text
-
+```
+```s
 igw-0776eab2191d55fcd
 ```
 
@@ -188,7 +194,8 @@ $ aws ec2 attach-internet-gateway --vpc-id vpc-0d71e52a8c79c4305 --internet-gate
 
 ```s
 $ aws ec2 allocate-address
-
+```
+```s
 {
     "PublicIp": "18.218.15.68",
     "AllocationId": "eipalloc-02e2f01ec0811e9c5",
@@ -202,7 +209,8 @@ $ aws ec2 allocate-address
 
 ```s
 $ aws ec2 create-nat-gateway --subnet-id subnet-034d5c4ae26958fcb --allocation-id eipalloc-02e2f01ec0811e9c5
-
+```
+```s
 {
     "ClientToken": "7a552c09-ac35-4c17-82d3-dea2574caa88",
     "NatGateway": {
@@ -224,7 +232,8 @@ $ aws ec2 create-nat-gateway --subnet-id subnet-034d5c4ae26958fcb --allocation-i
 
 ```s
 $ aws ec2 describe-route-tables --filters="Name=vpc-id,Values=vpc-0d71e52a8c79c4305"
-
+```
+```s
 {
     "RouteTables": [
         {
@@ -260,7 +269,8 @@ $ aws ec2 describe-route-tables --filters="Name=vpc-id,Values=vpc-0d71e52a8c79c4
 
 ```s
 $ aws ec2 create-route-table --vpc-id vpc-0d71e52a8c79c4305 --query RouteTable.RouteTableId --output text
-
+```
+```s
 rtb-07b8bad039aee580f
 ```
 
@@ -268,7 +278,8 @@ rtb-07b8bad039aee580f
 
 ```s
  $ aws ec2 associate-route-table  --subnet-id subnet-034d5c4ae26958fcb --route-table-id rtb-07b8bad039aee580f
-
+```
+```s
 {
     "AssociationId": "rtbassoc-076a30856ccbe1b09",
     "AssociationState": {
@@ -281,7 +292,8 @@ rtb-07b8bad039aee580f
 
 ```s
 $ aws ec2 create-route --route-table-id rtb-01f50968f2b15d30e --destination-cidr-block 0.0.0.0/0 --gateway-id igw-0776eab2191d55fcd
-
+```
+```s
 {
     "Return": true
 }
@@ -291,7 +303,8 @@ $ aws ec2 create-route --route-table-id rtb-01f50968f2b15d30e --destination-cidr
 
 ```s
 $ aws ec2 create-route --route-table-id rtb-07b8bad039aee580f --destination-cidr-block 0.0.0.0/0 --nat-gateway-id nat-0e858265b8c49214c
-
+```
+```s
 {
     "Return": true
 }
@@ -301,7 +314,8 @@ $ aws ec2 create-route --route-table-id rtb-07b8bad039aee580f --destination-cidr
 
 ```s
 $ aws ec2 describe-route-tables --filters "Name=vpc-id,Values=vpc-0d71e52a8c79c4305"
-
+```
+```s
 {
     "RouteTables": [
         {
@@ -371,20 +385,23 @@ $ aws ec2 describe-route-tables --filters "Name=vpc-id,Values=vpc-0d71e52a8c79c4
 }
 ```
 
-14. Modify the VPC attribute to enable public DNS hostname
+14. Modify the VPC attribute to enable public DNS hostname. These commands will run without any output if executed correctly.
 
 ``` s
 $ aws ec2 modify-vpc-attribute --vpc-id vpc-0d71e52a8c79c4305 --enable-dns-support "{\"Value\":true}"
+```
+```s
 $ aws ec2 modify-vpc-attribute --vpc-id vpc-0d71e52a8c79c4305 --enable-dns-hostnames "{\"Value\":true}"
 ```
-These commands will run without any output if executed correctly.
+
 
 
 15. Create a security group for bastion server to accept SSH connection
 
 ```s
 aws ec2 create-security-group --group-name bastion --description "allow 22 from my-ip" --vpc-id vpc-0d71e52a8c79c4305
-
+```
+```s
 {
     "GroupId": "sg-0ff79d57eb21e754a"
 }
@@ -394,7 +411,8 @@ aws ec2 create-security-group --group-name bastion --description "allow 22 from 
 
 ```s
 $ aws ec2 create-security-group --group-name frontend --description "allow 22 from bastion and 80 from all" --vpc-id vpc-0d71e52a8c79c4305
-
+```
+```s
 {
     "GroupId": "sg-05d1b2f90e1b0c6cb"
 }
@@ -404,7 +422,8 @@ $ aws ec2 create-security-group --group-name frontend --description "allow 22 fr
 
 ```s
 $ aws ec2 create-security-group --group-name backend --description "allow 22 from bastion and 3306 from frontend" --vpc-id vpc-0d71e52a8c79c4305
-
+```
+```s
 {
     "GroupId": "sg-039e85b4be2c09627"
 }
@@ -414,7 +433,8 @@ $ aws ec2 create-security-group --group-name backend --description "allow 22 fro
 > Create a security group for Bastion server. Find our public IP by running the following command.
 ```s
 $ curl https://checkip.amazonaws.com
-
+```
+```s
 49.37.232.13
 ```
 
@@ -425,12 +445,16 @@ $ aws ec2 authorize-security-group-ingress --group-id sg-0ff79d57eb21e754a --pro
 > We will now create a security group for Frontend server.
 ```s
 $ aws ec2 authorize-security-group-ingress --group-id sg-05d1b2f90e1b0c6cb --protocol tcp --port 80 --cidr 0.0.0.0/0
+```
+```s
 $ aws ec2 authorize-security-group-ingress --group-id sg-05d1b2f90e1b0c6cb --protocol tcp --port 22 --source-group sg-0ff79d57eb21e754a
 ```
 > Finally for the Backend server.
 
 ```s
 $ aws ec2 authorize-security-group-ingress --group-id sg-039e85b4be2c09627 --protocol tcp --port 3306 --source-group sg-05d1b2f90e1b0c6cb
+```
+```s
 $ aws ec2 authorize-security-group-ingress --group-id sg-039e85b4be2c09627 --protocol tcp --port 22 --source-group sg-0ff79d57eb21e754a
 ```
 
@@ -444,7 +468,8 @@ $ aws ec2 create-key-pair --key-name vpc_key --query 'KeyMaterial' --output text
 
 ```s
 $ aws ec2 run-instances --image-id ami-0beaa649c482330f7 --count 1 --instance-type t2.micro --key-name vpc_key --security-group-ids sg-0ff79d57eb21e754a --subnet-id subnet-0fc044a0778f08c84
-
+```
+```s
 {
     "Groups": [],
     "Instances": [
@@ -554,7 +579,8 @@ $ aws ec2 run-instances --image-id ami-0beaa649c482330f7 --count 1 --instance-ty
 
 ```s
 $ aws ec2 run-instances --image-id ami-0beaa649c482330f7 --count 1 --instance-type t2.micro --key-name vpc_key --security-group-ids sg-05d1b2f90e1b0c6cb --subnet-id subnet-097f2ce951a1588d7
-
+```
+```s
 {
     "Groups": [],
     "Instances": [
@@ -664,7 +690,8 @@ $ aws ec2 run-instances --image-id ami-0beaa649c482330f7 --count 1 --instance-ty
 
 ```s
 $ aws ec2 run-instances --image-id ami-0beaa649c482330f7 --count 1 --instance-type t2.micro --key-name vpc_key --security-group-ids sg-039e85b4be2c09627 --subnet-id subnet-034d5c4ae26958fcb
-
+```
+```s
 {
     "Groups": [],
     "Instances": [
@@ -774,7 +801,8 @@ $ aws ec2 run-instances --image-id ami-0beaa649c482330f7 --count 1 --instance-ty
 23. Create Name tags for the instances. For that we need to get the instance Id's of the servers.
 ```s
 $ aws ec2 describe-instances
-
+```
+```s
  "InstanceId": "i-0e1b896867eee0b15",
  "InstanceId": "i-0126b8c1a2e7026e7",
  "InstanceId": "i-05ac5e2c63c4f3dca",
@@ -782,7 +810,11 @@ $ aws ec2 describe-instances
  
  ```s
 $ aws ec2 create-tags --resources i-0e1b896867eee0b15 --tags Key=Name,Value=bastion
+```
+```s
 $ aws ec2 create-tags --resources i-0126b8c1a2e7026e7 --tags Key=Name,Value=frontend
+```
+```s
 $ aws ec2 create-tags --resources i-05ac5e2c63c4f3dca --tags Key=Name,Value=backend
 ```
 
@@ -806,9 +838,11 @@ Run "sudo yum update" to apply all updates.
 [ec2-user@ip-172-16-25-2 ~]$ 
 ```
 Change the hostname of the server to bastion for easy identification.
-
 ```s
-[ec2-user@ip-172-16-25-2 ~]$ hostnamectl set-hostname bastion.us-east-2.compute.internal
+sudo hostnamectl set-hostname bastion.us-east-2.compute.internal
+```
+```s
+[ec2-user@ip-172-16-25-2 ~]$ sudo hostnamectl set-hostname bastion.us-east-2.compute.internal
 [ec2-user@ip-172-16-25-2 ~]$ 
 [ec2-user@ip-172-16-25-2 ~]$ logout
 user@MyLinux:~$ ssh -i vpc_key.pem ec2-user@ec2-18-222-6-227.us-east-2.compute.amazonaws.com
@@ -840,6 +874,9 @@ Run "sudo yum update" to apply all updates.
 ```
 
 Change the hostname of frontend server for easy identification.
+```s
+sudo hostnamectl set-hostname frontend.us-east-2.compute.internal
+```
 
 ```s
 [ec2-user@ip-172-16-108-190 ~]$ sudo hostnamectl set-hostname frontend.us-east-2.compute.internal
@@ -882,6 +919,9 @@ Warning: Permanently added 'ip-172-16-183-3.us-east-2.compute.internal,172.16.18
 ```
 
 Change the hostname of backend server as well.
+```s
+sudo hostnamectl set-hostname backend.us-east-2.compute.internal
+```
 
 ```s
 [ec2-user@ip-172-16-183-3 ~]$ sudo hostnamectl set-hostname backend.us-east-2.compute.internal
