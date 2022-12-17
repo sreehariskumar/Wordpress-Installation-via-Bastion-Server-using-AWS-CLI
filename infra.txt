@@ -2,28 +2,27 @@ VPC
 ===
 vpc - vpc-0d71e52a8c79c4305
 
+
 SUBNETS
 =======
 subnet1 - 172.16.0.0/18     - subnet-0fc044a0778f08c84
 subnet2 - 172.16.64.0/18    - subnet-097f2ce951a1588d7
 subnet3 - 172.16.128.0/18   - subnet-034d5c4ae26958fcb    ->   nat-0e858265b8c49214c     ->   rtb-07b8bad039aee580f
 
+
 INTERNET GATEWAY
 ================
 igw - igw-0776eab2191d55fcd
 
-ELASTIC IP
-==========
-eip - eipalloc-02e2f01ec0811e9c5
 
 ROUTE TABLES
 ============
 rtb - rtb-01f50968f2b15d30e -> 0.0.0.0/0 --gateway-id igw-0776eab2191d55fcd
 rtb - 07b8bad039aee580f     -> 0.0.0.0/0 --nat-gateway-id nat-0e858265b8c49214c
 
+
 SECURITY GROUPS
 ===============
 bastion  - sg-0ff79d57eb21e754a  -> allow 22 from my ip
 frontend - sg-05d1b2f90e1b0c6cb  -> allow 22 from bastion & 80 from all
 backend  - sg-039e85b4be2c09627  -> allow 22 from bastion & 3306 from frontend
-
