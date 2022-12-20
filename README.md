@@ -34,6 +34,7 @@ Default output format [None]: json
 $ aws ec2 create-vpc --cidr-block 172.16.0.0/16 --query Vpc.VpcId --output text
 ```
 ```s
+Output:
 vpc-0d71e52a8c79c4305
 ```
 
@@ -51,6 +52,7 @@ $ aws ec2 create-tags --resources vpc-0d71e52a8c79c4305 --tags Key=Name,Value=VP
 $ aws ec2 create-subnet --vpc-id vpc-0d71e52a8c79c4305 --cidr-block 172.16.0.0/18 --availability-zone us-east-2a
 ```
 ```s
+Output:
 {
     "Subnet": {
         "AvailabilityZone": "us-east-2a",
@@ -72,6 +74,7 @@ $ aws ec2 create-tags --resources subnet-0fc044a0778f08c84 --tags Key=Name,Value
 $ aws ec2 create-subnet --vpc-id vpc-0d71e52a8c79c4305 --cidr-block 172.16.64.0/18 --availability-zone us-east-2b
 ```
 ```s
+Output:
 {
     "Subnet": {
         "AvailabilityZone": "us-east-2b",
@@ -94,6 +97,7 @@ $ aws ec2 create-tags --resources subnet-0e9f16987c188ccff --tags Key=Name,Value
 $ aws ec2 create-subnet --vpc-id vpc-0d71e52a8c79c4305 --cidr-block 172.16.128.0/18 --availability-zone us-east-2c
 ```
 ```s
+Output:
 {
     "Subnet": {
         "AvailabilityZone": "us-east-2c",
@@ -116,6 +120,7 @@ $ aws ec2 create-tags --resources subnet-034d5c4ae26958fcb --tags Key=Name,Value
 $ aws ec2 describe-subnets  --filters "Name=vpc-id,Values=vpc-0d71e52a8c79c4305"
 ```
 ```s
+Output:
 {
     "Subnets": [
         {
@@ -181,6 +186,7 @@ $ aws ec2 describe-subnets  --filters "Name=vpc-id,Values=vpc-0d71e52a8c79c4305"
 $ aws ec2 create-internet-gateway --query InternetGateway.InternetGatewayId --output text
 ```
 ```s
+Output:
 igw-0776eab2191d55fcd
 ```
 
@@ -196,6 +202,7 @@ $ aws ec2 attach-internet-gateway --vpc-id vpc-0d71e52a8c79c4305 --internet-gate
 $ aws ec2 allocate-address
 ```
 ```s
+Output:
 {
     "PublicIp": "18.218.15.68",
     "AllocationId": "eipalloc-02e2f01ec0811e9c5",
@@ -211,6 +218,7 @@ $ aws ec2 allocate-address
 $ aws ec2 create-nat-gateway --subnet-id subnet-034d5c4ae26958fcb --allocation-id eipalloc-02e2f01ec0811e9c5
 ```
 ```s
+Output:
 {
     "ClientToken": "7a552c09-ac35-4c17-82d3-dea2574caa88",
     "NatGateway": {
@@ -234,6 +242,7 @@ $ aws ec2 create-nat-gateway --subnet-id subnet-034d5c4ae26958fcb --allocation-i
 $ aws ec2 describe-route-tables --filters="Name=vpc-id,Values=vpc-0d71e52a8c79c4305"
 ```
 ```s
+Output:
 {
     "RouteTables": [
         {
@@ -271,6 +280,7 @@ $ aws ec2 describe-route-tables --filters="Name=vpc-id,Values=vpc-0d71e52a8c79c4
 $ aws ec2 create-route-table --vpc-id vpc-0d71e52a8c79c4305 --query RouteTable.RouteTableId --output text
 ```
 ```s
+Output:
 rtb-07b8bad039aee580f
 ```
 
@@ -280,6 +290,7 @@ rtb-07b8bad039aee580f
  $ aws ec2 associate-route-table  --subnet-id subnet-034d5c4ae26958fcb --route-table-id rtb-07b8bad039aee580f
 ```
 ```s
+Output:
 {
     "AssociationId": "rtbassoc-076a30856ccbe1b09",
     "AssociationState": {
@@ -294,6 +305,7 @@ rtb-07b8bad039aee580f
 $ aws ec2 create-route --route-table-id rtb-01f50968f2b15d30e --destination-cidr-block 0.0.0.0/0 --gateway-id igw-0776eab2191d55fcd
 ```
 ```s
+Output:
 {
     "Return": true
 }
@@ -305,6 +317,7 @@ $ aws ec2 create-route --route-table-id rtb-01f50968f2b15d30e --destination-cidr
 $ aws ec2 create-route --route-table-id rtb-07b8bad039aee580f --destination-cidr-block 0.0.0.0/0 --nat-gateway-id nat-0e858265b8c49214c
 ```
 ```s
+Output:
 {
     "Return": true
 }
@@ -316,6 +329,7 @@ $ aws ec2 create-route --route-table-id rtb-07b8bad039aee580f --destination-cidr
 $ aws ec2 describe-route-tables --filters "Name=vpc-id,Values=vpc-0d71e52a8c79c4305"
 ```
 ```s
+Output:
 {
     "RouteTables": [
         {
@@ -402,6 +416,7 @@ $ aws ec2 modify-vpc-attribute --vpc-id vpc-0d71e52a8c79c4305 --enable-dns-hostn
 aws ec2 create-security-group --group-name bastion --description "allow 22 from my-ip" --vpc-id vpc-0d71e52a8c79c4305
 ```
 ```s
+Output:
 {
     "GroupId": "sg-0ff79d57eb21e754a"
 }
@@ -413,6 +428,7 @@ aws ec2 create-security-group --group-name bastion --description "allow 22 from 
 $ aws ec2 create-security-group --group-name frontend --description "allow 22 from bastion and 80 from all" --vpc-id vpc-0d71e52a8c79c4305
 ```
 ```s
+Output:
 {
     "GroupId": "sg-05d1b2f90e1b0c6cb"
 }
@@ -424,6 +440,7 @@ $ aws ec2 create-security-group --group-name frontend --description "allow 22 fr
 $ aws ec2 create-security-group --group-name backend --description "allow 22 from bastion and 3306 from frontend" --vpc-id vpc-0d71e52a8c79c4305
 ```
 ```s
+Output:
 {
     "GroupId": "sg-039e85b4be2c09627"
 }
@@ -435,6 +452,7 @@ $ aws ec2 create-security-group --group-name backend --description "allow 22 fro
 $ curl https://checkip.amazonaws.com
 ```
 ```s
+Output:
 49.37.232.13
 ```
 
@@ -470,6 +488,7 @@ $ aws ec2 create-key-pair --key-name vpc_key --query 'KeyMaterial' --output text
 $ aws ec2 run-instances --image-id ami-0beaa649c482330f7 --count 1 --instance-type t2.micro --key-name vpc_key --security-group-ids sg-0ff79d57eb21e754a --subnet-id subnet-0fc044a0778f08c84
 ```
 ```s
+Output:
 {
     "Groups": [],
     "Instances": [
@@ -581,6 +600,7 @@ $ aws ec2 run-instances --image-id ami-0beaa649c482330f7 --count 1 --instance-ty
 $ aws ec2 run-instances --image-id ami-0beaa649c482330f7 --count 1 --instance-type t2.micro --key-name vpc_key --security-group-ids sg-05d1b2f90e1b0c6cb --subnet-id subnet-097f2ce951a1588d7
 ```
 ```s
+Output:
 {
     "Groups": [],
     "Instances": [
@@ -692,6 +712,7 @@ $ aws ec2 run-instances --image-id ami-0beaa649c482330f7 --count 1 --instance-ty
 $ aws ec2 run-instances --image-id ami-0beaa649c482330f7 --count 1 --instance-type t2.micro --key-name vpc_key --security-group-ids sg-039e85b4be2c09627 --subnet-id subnet-034d5c4ae26958fcb
 ```
 ```s
+Output:
 {
     "Groups": [],
     "Instances": [
@@ -803,6 +824,7 @@ $ aws ec2 run-instances --image-id ami-0beaa649c482330f7 --count 1 --instance-ty
 $ aws ec2 describe-instances
 ```
 ```s
+Output:
  "InstanceId": "i-0e1b896867eee0b15",
  "InstanceId": "i-0126b8c1a2e7026e7",
  "InstanceId": "i-05ac5e2c63c4f3dca",
