@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-## Usually, we use Terraform to create a VPC and launch an instance in it. But in this project I'm using AWS CLI to do the same task.
+## Usually, we use Terraform to create a VPC and launch an instances in it. But in this project I'm using AWS CLI to do the same task.
 
 ### Requirements
 - An IAM user with programmatic access and EC2FullAccess permission
