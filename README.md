@@ -6,7 +6,7 @@
 ## Usually, we use Terraform to create a VPC and launch an instances in it. But in this project I'm using AWS CLI to do the same task.
 
 ### Requirements
-- An IAM user with programmatic access and EC2FullAccess permission
+- An IAM user with programmatic access and AmazonEC2FullAccess permission
 
 ### Features
 
